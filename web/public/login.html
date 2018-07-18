@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+ <head>
+ <meta charset="utf-8" />
+ <meta name="description" content="A frontend dashboard for the
+TrackMe application" />
+ <meta name="author" content="Lachlan McInnes" />
+ <meta name="viewport" content="width=device-width, initialscale=1.0">
+ <title>TrackMe</title>
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" />
+ </head>
+ <body>
+     <div class="container">
+        <div id="navbar"></div>
+        <h1>Log In</h1>
+        <hr>
+        <div>
+            <label for="username">User Name</label>
+            <input type="text" placeholder="Enter Username" name="username" required>
+        </div>
+        <div>
+            <label for="password">Enter Password</label>
+            <input type="text" placeholder="Enter Password" name="password" required>
+        </div>
+
+        <button class="btn btn-success" id="log-in">OK</button>
+
+        <p>Don't have an account? Create one <a href="/register">here</a></p>
+
+        <div id="footer"></div>
+     </div>
+
+ <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script> 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script> 
+ <script src="app.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</body>
+</html>
