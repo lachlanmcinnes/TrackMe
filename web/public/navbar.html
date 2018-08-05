@@ -11,21 +11,9 @@
             <a class="nav-item nav-link" href="/about-me">About Me</a>
             <a class="nav-item nav-link" href="/login">Log In</a>
             <a class="nav-item nav-link" href="/register">Register</a>
-            <a class="nav-item nac-link" href="/user-list">Users</a>
+            <a class="nav-item nav-link" href="/users">Users</a>
+            <a class="nav-item nav-link" href="/logout">Log Out</a>
         </div>
     </div>
-
-    <script>
-        const isAuthenticated = localStorage.getItem('isAuthenticated');
-        const logoutElement = '<a class="nav-item nav-link" onClick="logout()">Logout</a>';
-        const loginElement = '<a class="nav-item nav-link" href="/login">Login</a>';
-
-        if(isAuthenticated) {
-            $('#auth-nav').append(logoutElement);
-        }
-        else{
-            $('#auth-nav').append(loginElement)
-        }
-    </script>
 
 </nav>

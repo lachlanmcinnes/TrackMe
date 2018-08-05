@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 const base = `${__dirname}/public`;
 
 app.use(express.static('public'));
@@ -30,8 +30,12 @@ app.get('/login', (req, res) => {
     res.sendFile(`${base}/login.html`);
 });
 
-app.get('/user-list', (req, res) => {
+app.get('/users', (req, res) => {
     res.sendFile(`${base}/user-list.html`);
+});
+
+app.get('/logout', (req, res) => {
+    res.sendFile(`${base}/logout.html`);
 });
 
 app.get('*', (req, res) => {

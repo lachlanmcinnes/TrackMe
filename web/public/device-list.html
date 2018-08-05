@@ -22,6 +22,29 @@ TrackMe application" />
             </thead>   
             <tbody></tbody> 
          </table>
+         <!--Modal-->
+         <div class="modal fade" id="historyModal">
+             <div class="modal-dialog">
+                 <div class="modal-content">
+                     <div class="modal-header">
+                         <h5 class="modal-title">Device History</h5>
+                     </div>
+                     <div class="modal-body">
+                         <table class="table">
+                             <thread>
+                                 <tr>
+                                     <th>Time</th>
+                                     <th>Temperature</th>
+                                     <th>Latitude</th>
+                                     <th>Longitude</th>
+                                 </tr>
+                             </thread>
+                             <tbody id="historyContent"></tbody>
+                         </table>
+                     </div>
+                 </div>
+             </div>
+         </div>
          <div id="footer"></div>
      </div>
 

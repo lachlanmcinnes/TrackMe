@@ -1,57 +1,60 @@
 $('#navbar').load('navbar.html');
 $('#footer').load('footer.html')
 
-const devices = JSON.parse(localStorage.getItem('devices')) || []; 
-const users = JSON.parse(localStorage.getItem('users')) || []; 
+const API_URL = 'https://217545902-sit-209.now.sh/api';
 
-
-devices.forEach(function(device) {   
-    $('#devices tbody').append(`    
-        <tr>       
-            <td>${device.user}</td>       
-            <td>${device.name}</td>     
-        </tr>`   
-    ); 
-});
-
-users.forEach(function(user) {
+const responseUsers = $.get(`${API_URL}/users`)
+.then(responseUsers => {
+    responseUsers.forEach(user => {
     $('#users tbody').append(`
         <tr>
-            <td>${user.username}</td>
+            <td>${user.user}</td>
             <td>${user.password}</td>
         </tr>`
-    );
+        );
+    });
+})
+.catch(error => {
+    console.log(`Error: ${error}`);
 });
 
 $('#add-device').on('click', function() {   
     const user = $('#user').val();   
     const name = $('#name').val();   
-    devices.push({ user, name });   
-    localStorage.setItem('devices',JSON.stringify(devices));
-    location.href = '/'; 
-})
+    const sensorData = [];
+
+    const body = {
+        name,
+        user,
+        sensorData
+    };
+
+    $.post(`${API_URL}/devices`, body)
+    .then(response => {
+        location.href = '/'; 
+    })
+    .catch(error => {
+        console.error(`Error: ${error}`);
+    });
+});
 
 $('#new-user').on('click', function() {   
-    const user = $('#username').val();   
+    const username = $('#username').val();   
     const password = $('#password').val();
     const confirmpassword = $('#confirmpassword').val();
 
-    const exists = users.find((user) => {
-        return user.username === username;
-    });
-
     if (password == confirmpassword){
-        if (exists == undefined){
-            users.push({username,password});
-            localStorage.setItem('users',JSON.stringify(users));
-            location.href = '/user-list';
-        }else{
-            location.href = '/user-list';
-        }
+       $.post(`${API_URL}/register`, { username, password })
+       .then((response)=>{
+            if (response.success){
+                location.href = '/';
+            }else{
+                $('#message').append(`<p class="alert alert-danger".${response}</p>`);
+            }
+        });
     }else{
-        location.href = '/user-list';
+        location.href = '/users';
     }
-
 }); 
 
 $('#send-command').on('click', function() {   
@@ -60,24 +63,60 @@ $('#send-command').on('click', function() {
     location.href = '/';
 }); 
 
-$('#log-in').on('click', function() {      
-    const username = $('#username').val();   
+$('#login').on('click', () =>{
+    const user = $('#username').val();
     const password = $('#password').val();
-
-    const foundIndex = users.findIndex((user) => {
-        return user.username === username;
+    $.post(`${API_URL}/authenticate`, { user, password })
+    .then((response) => {
+        if (response.success==true) {
+            localStorage.setItem('user', user);
+            localStorage.setItem('isAdmin', response.isAdmin);
+            location.href = '/';
+        }else{
+            $('#message').append(`<p class="alert alert-danger".${response}</p>`);
+        }
     });
-
-    const u = users[foundIndex].username
-    const p = users[foundIndex].password
-
-    if(u == username && p == password){
-        localStorage.setItem('isAuthenticated',true)
-        location.href = '/';
-    };
+    localStorage.setItem('user', user);
+    location.href = '/'
 }); 
 
-const logout = () => {
-    localStorage.removeItem('isAuthenticated');
-    location.href = '/login';
+const currentUser = localStorage.getItem('user');
+if (currentUser){
+    $.get(`${API_URL}/users/${currentUser}/devices`)
+    .then(response => {
+        response.forEach((device) => {
+            $('#devices tbody').append(`
+            <tr data-device-id=${device._id}>
+                <td>${device.user}</td>
+                <td>${device.name}</td>
+            </tr>`
+            );
+        });
+        $('#devices tbody tr').on('click', (e) => {
+            const deviceId = e.currentTarget.getAttribute('data-device-id');
+            $.get(`${API_URL}/devices/${deviceId}/device-history`)
+            .then(response => {
+                response.map(sensorData => {
+                    $('#historyContent').append(`
+                        <tr>
+                            <td>${sensorData.ts}</td>
+                            <td>${sensorData.temp}</td>
+                            <td>${sensorData.loc.lat}</td>
+                            <td>${sensorData.loc.lon}</td>
+                        </tr>
+                    `);
+                });
+                $('#historyModal').modal('show');
+            });
+        });
+    })
+    .catch(error => {
+        console.error(`Error: ${error}`);
+    });
 }
+
+$('#log-out').on('click', function() {   
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('user');
+    location.href = '/login';
+}); 
