@@ -32,7 +32,7 @@ $('#add-device').on('click', function() {
 })
 
 $('#new-user').on('click', function() {   
-    const username = $('#username').val();   
+    const user = $('#username').val();   
     const password = $('#password').val();
     const confirmpassword = $('#confirmpassword').val();
 
