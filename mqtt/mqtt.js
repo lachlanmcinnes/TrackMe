@@ -23,10 +23,14 @@ client.on('connect', () => {
 
 app.post('/send-command', (req,res) => {
     const {deviceId, command} = req.body;
+
     const topic = `/command/${deviceId}`;
+
     client.publish(topic, command, () => {
         res.send('published new message');
     });
+
+    return res.send(`${command}`);
 });
 
 app.listen(port, () => {
