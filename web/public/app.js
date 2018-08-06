@@ -77,8 +77,6 @@ $('#login').on('click', () =>{
             $('#message').append(`<p class="alert alert-danger".${response}</p>`);
         }
     });
-    localStorage.setItem('user', user);
-    location.href = '/'
 }); 
 
 const currentUser = localStorage.getItem('user');
