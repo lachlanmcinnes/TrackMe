@@ -2,7 +2,7 @@ $('#navbar').load('navbar.html');
 $('#footer').load('footer.html')
 
 const API_URL = 'https://217545902-sit-209.now.sh/api';
-const MQTT_URL = 'https://217545902-sit-209.now.sh/mqtt'
+const MQTT_URL = 'https://217545902-sit-209-mqtt.now.sh'
 
 const responseUsers = $.get(`${API_URL}/users`)
 .then(responseUsers => {
