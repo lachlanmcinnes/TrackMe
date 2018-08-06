@@ -118,14 +118,6 @@ app.post('/api/register', (req, res) => {
     });
 });
 
-app.post('/api/send-command', (req,res) => {
-    const {command, deviceId} = req.body;
-})
-
-app.get('/api/test',(requestAnimationFrame, res) => {
-    res.send ('The API is working!');
-});
-
 app.listen(port, () => {
     console.log(`listening on port ${port}`);
 });
