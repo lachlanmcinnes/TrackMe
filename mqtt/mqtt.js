@@ -21,7 +21,7 @@ client.on('connect', () => {
     console.log('mqtt connected');
 });
 
-app.post('/send-command', (requestAnimationFrame, res) => {
+app.post('/send-command', (req, res) => {
     const { deviceId, command } = req.body;
     const topic = `/command/${deviceId}`;
     client.publish(topic, command, () => {
