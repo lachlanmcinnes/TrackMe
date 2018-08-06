@@ -2,6 +2,7 @@ $('#navbar').load('navbar.html');
 $('#footer').load('footer.html')
 
 const API_URL = 'https://217545902-sit-209.now.sh/api';
+const MQTT_URL = 'https://217545902-sit-209.now.sh/mqtt'
 
 const responseUsers = $.get(`${API_URL}/users`)
 .then(responseUsers => {
@@ -61,7 +62,7 @@ $('#send-command').on('click', function() {
     const command = $('#command').val();   
     const deviceId = $('#deviceId').val(); 
 
-    $.post(`http://localhost:5001/send-command`, {command, deviceId})
+    $.post(`${MQTT_URL}/send-command`, {command, deviceId})
 }); 
 
 $('#login').on('click', () =>{
