@@ -59,8 +59,9 @@ $('#new-user').on('click', function() {
 
 $('#send-command').on('click', function() {   
     const command = $('#command').val();   
-    console.log(`command is: ${command}`); 
-    location.href = '/';
+    const deviceId = $('#deviceId').val(); 
+
+    $.post(`http://localhost:5001/send-command`, {command, deviceId})
 }); 
 
 $('#login').on('click', () =>{
