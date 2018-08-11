@@ -40,12 +40,13 @@ $('#add-device').on('click', function() {
 });
 
 $('#new-user').on('click', function() {   
-    const username = $('#username').val();   
+    const user = $('#username').val();   
     const password = $('#password').val();
     const confirmpassword = $('#confirmpassword').val();
+    const isAdmin = true;
 
     if (password == confirmpassword){
-       $.post(`${API_URL}/register`, { username, password })
+       $.post(`${API_URL}/register`, { user, password, isAdmin })
        .then((response)=>{
             if (response.success){
                 location.href = '/';
